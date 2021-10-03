@@ -12,9 +12,7 @@ const client = new Twitter({
 router.get('/tweet', async (req, res, next) => {
   try{
     const name = req.query.user;
-    if(name == ""){
-      name = "Wario64";
-    }
+    
     const tweet = await client.get("statuses/user_timeline.json?screen_name=" + name + "&count=1", {     
     })
     res.send({tweet});
