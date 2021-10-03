@@ -1,0 +1,24 @@
+{
+  "name": "Twitter-bot",
+  "version": "1.0.0",
+  "description": "Displays latest tweets from certain users, filtering using a keyword",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently 'cd frontend && npm start''cd backend && npm run dev'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AWSMProdigy/Twitter-bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AWSMProdigy/Twitter-bot/issues"
+  },
+  "homepage": "https://github.com/AWSMProdigy/Twitter-bot#readme",
+  "dependencies": {
+    "concurrently": "^6.3.0"
+  }
+}
