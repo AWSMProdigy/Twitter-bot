@@ -5,33 +5,37 @@ import axios from 'axios'
 import React from 'react';
 
 function App() {
-  console.log("Hallo");
   const[tweet, setTweet] = useState([]);
   const[user, setUser] = useState("");
-
-  useEffect(() => getTweet(), [user])
+  const[myVar, setVar] = useState();
 
   var userToGrab = React.createRef();
-  var myVar;
+  let count;
 
-  function handleButton(){
-    console.log("Button pressed");
-    var inputUser;
-    if(userToGrab.current.value == null){
-      inputUser = user;
+  useEffect(() =>{
+    if(count === 0){
+      count++;
     }
     else{
-      inputUser = userToGrab.current.value;
+      clearInterval(myVar);
+      setVar(setInterval(() => getTweet(), 15000));
     }
-    clearInterval(myVar);
-    myVar = setInterval(() => setUser(inputUser), 15000);
+  }, [user])
+
+  function handleButton(){
+    if(userToGrab.current.value === ""){
+      alert("Please enter a user")
+    }
+    else{
+      setUser(userToGrab.current.value);
+      userToGrab.current.value = "";
+    }
   }
 
 
   function getTweet(){
     console.log(user);
-    if(user == ""){
-      setUser("Wario64");
+    if(user === ""){
       return;
     }
     axios.get('/api/tweet', {
