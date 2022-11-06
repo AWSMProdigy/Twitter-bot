@@ -25,4 +25,20 @@ router.get('/tweet', async (req, res, next) => {
   }
 });
 
+router.get('/user', async (req, res, next) => {
+  try{
+    const name = req.query.user;
+    
+    const user = await client.get("users/by?username" + user, {     
+    })
+    res.send({user});
+  }
+  catch(error){
+    next(error);
+    res.status(400).send({
+      message: "User does not exist"
+    })
+  }
+});
+
 module.exports = router;
