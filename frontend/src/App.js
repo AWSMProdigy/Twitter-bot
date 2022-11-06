@@ -36,7 +36,8 @@ function App() {
     }
   }, [user])
 
-  function handleButton(){
+  function handleButton(e){
+    e.preventDefault();
     if(userToGrab.current.value === ""){
       alert("Please enter a user")
     }
@@ -64,8 +65,11 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <input ref={userToGrab}></input> 
-        <button onClick={handleButton}></button>
+        <form onSubmit={handleButton}>
+          <label>Enter User: </label>
+          <input id="userInput" ref={userToGrab}></input>
+          <input type="submit"></input>
+        </form>
         <h3>{user}</h3>
         <h3 id="lastTweet">{tweet}</h3>
       </header>
