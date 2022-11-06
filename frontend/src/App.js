@@ -8,27 +8,31 @@ function App() {
   const[tweet, setTweet] = useState([]);
   const[user, setUser] = useState("");
   const[myVar, setVar] = useState();
+  const[count, setCount] = useState(0);
 
   var userToGrab = React.createRef();
-  let count;
 
   useEffect(() =>{
     if(count === 0){
-      count++;
+      setCount(1);
     }
     else{
-      axios.get('/api/user', {
+      console.log("hello");
+      axios.get('/api/tweet', {
         params: {
           user,
         },
       }).then(response => {
         console.log("User found!");
+        setTweet(response.data.tweet[0].text);
+        clearInterval(myVar);
+        setVar(setInterval(() => getTweet(), 15000));
       }, response => {
         console.log(response);
+        setTweet("");
         alert("User does not exist or has no tweets");
+        clearInterval(myVar);
       })
-      clearInterval(myVar);
-      setVar(setInterval(() => getTweet(), 15000));
     }
   }, [user])
 

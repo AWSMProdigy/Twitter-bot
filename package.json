@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/AWSMProdigy/Twitter-bot#readme",
   "dependencies": {
-    "concurrently": "^6.3.0"
+    "concurrently": "^6.3.0",
+    "twitter-api-sdk": "^1.2.1",
+    "twitter-api-v2": "^1.12.9"
   }
 }
