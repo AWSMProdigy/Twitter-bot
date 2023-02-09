@@ -9,9 +9,11 @@ function App() {
   const[user, setUser] = useState("");
   const[myVar, setVar] = useState();
   const[count, setCount] = useState(0);
-  const[bg, setBG] = useState("#282c34")
+  const[bg, setBG] = useState("#282c34");
+  const[keywords, setKeywords] = useState([]);
 
   var userToGrab = React.createRef();
+  var keyToGrab = React.createRef();
 
   useEffect(() =>{
     if(count === 0){
@@ -43,7 +45,7 @@ function App() {
     }
     //IF tweet includes Zelda, show greeen
     else{
-      if(tweet.toLowerCase().includes("zelda") || tweet.toLowerCase().includes("tears")){
+      if(keywords.some(v => (tweet.toLowerCase().includes(v)))){
         setBG("#1dd10c");
       }
       //If not, show red
@@ -81,6 +83,25 @@ function App() {
       }
     })
   }
+
+  function addKeyword(e){
+    e.preventDefault();
+    if(keyToGrab.current.value === ""){
+      alert("Please enter a keyword")
+    }
+    else{
+      let newkey = keywords;
+      newkey.push(keyToGrab.current.value)
+      setKeywords(keywords, keyToGrab.current.value);
+      console.log(keywords)
+
+      keyToGrab.current.value = "";
+    }
+  }
+
+  function clearKeywords(){
+    setKeywords([]);
+  }
   
   return (
     <div className="App">
@@ -90,7 +111,16 @@ function App() {
           <input id="userInput" ref={userToGrab}></input>
           <input type="submit"></input>
         </form>
+        <form onSubmit={addKeyword}>
+          <label>Enter keyword to search for: </label>
+          <input id="keywordInput" ref={keyToGrab}></input>
+          <input type="submit"></input>
+        </form>
+        <button onClick={clearKeywords}></button>
         <h3>{user}</h3>
+        {keywords.map((keyword) => 
+          <h3 key={keyword}>{keyword}</h3>
+        )}
         <h3 id="lastTweet">{tweet}</h3>
       </header>
     </div>
