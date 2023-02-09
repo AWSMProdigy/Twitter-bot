@@ -5,10 +5,11 @@ import axios from 'axios'
 import React from 'react';
 
 function App() {
-  const[tweet, setTweet] = useState([]);
+  const[tweet, setTweet] = useState("");
   const[user, setUser] = useState("");
   const[myVar, setVar] = useState();
   const[count, setCount] = useState(0);
+  const[bg, setBG] = useState("#282c34")
 
   var userToGrab = React.createRef();
 
@@ -17,7 +18,6 @@ function App() {
       setCount(1);
     }
     else{
-      console.log("hello");
       axios.get('/api/tweet', {
         params: {
           user,
@@ -35,6 +35,23 @@ function App() {
       })
     }
   }, [user])
+
+  //Runs every time tweet changes
+  useEffect(() => {
+    if(count === 0){
+      setCount(1);
+    }
+    //IF tweet includes Zelda, show greeen
+    else{
+      if(tweet.toLowerCase().includes("zelda") || tweet.toLowerCase().includes("tears")){
+        setBG("#1dd10c");
+      }
+      //If not, show red
+      else{
+        setBG("#da1616");
+      }
+    }
+  }, [tweet])
 
   function handleButton(e){
     e.preventDefault();
@@ -58,13 +75,16 @@ function App() {
       },
     }).then(response => {
       console.log(response.data);
-      setTweet(response.data.tweet[0].text);
+      if(response.data.tweet[0].text){
+          setBG("#282c34");
+          setTweet(response.data.tweet[0].text);
+      }
     })
   }
   
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="App-header" style={{backgroundColor: bg}}>
         <form onSubmit={handleButton}>
           <label>Enter User: </label>
           <input id="userInput" ref={userToGrab}></input>
